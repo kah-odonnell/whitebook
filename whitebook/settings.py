@@ -28,11 +28,19 @@ else:
     DATABASES = {
         'default': dj_database_url.config()
     }
-    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY']
-    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_KEY']
-    AWS_STORAGE_BUCKET_NAME = "whitebook"
-    STATIC_URL = 'https://s3.amazonaws.com/whitebook/'
+    try:
+        STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+        AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY']
+        AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_KEY']
+        AWS_STORAGE_BUCKET_NAME = "whitebook"
+        STATIC_URL = 'https://s3.amazonaws.com/whitebook/'
+    except:
+        import secrets
+        STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+        AWS_ACCESS_KEY_ID = secrets.AWS_ACCESS_KEY
+        AWS_SECRET_ACCESS_KEY = secrets.AWS_SECRET_KEY
+        AWS_STORAGE_BUCKET_NAME = "whitebook"
+        STATIC_URL = 'https://s3.amazonaws.com/whitebook/'
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
