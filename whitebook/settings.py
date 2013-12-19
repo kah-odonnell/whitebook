@@ -18,7 +18,8 @@ if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3', 
-            'NAME': os.path.join(BASE_DIR, 'development.sqlite3'),
+            'NAME': os.path.join(BASE_DIR, 'development.sqlite3')
+        }
     }
     STATIC_URL = '/static/'
 else:
@@ -30,7 +31,7 @@ else:
     STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
     AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY']
     AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_KEY']
-    AWS_STORAGE_BUCKET_NAME = whitebook
+    AWS_STORAGE_BUCKET_NAME = "whitebook"
     STATIC_URL = 'https://s3.amazonaws.com/whitebook/'
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
