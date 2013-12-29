@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% load dajaxice_templatetags %}
+<html lang="en">
+<link href="{{STATIC_URL}}css/bootstrap.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/whitebook.css" rel="stylesheet">
+<head>
+    <title>The White Book</title>
+    <style>
+    	@font-face {
+    		font-family: minecraft;
+    		src: url({{STATIC_URL}}fonts/minecraft.ttf) format('truetype');
+    	}
+		* {
+			font-weight: normal !important;
+			font-family: minecraft !important;
+			-webkit-border-radius: 0 !important;
+			-moz-border-radius: 0 !important;
+			  border-radius: 0 !important;
+		}
+    </style>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="{{STATIC_URL}}js/jquery.dajax.core.js"></script>
+    {% dajaxice_js_import %}
+    <script type="text/javascript">
+    	function submitStory(){
+    		Dajaxice.deeds.submitStory(Dajax.process, {'data':$('#newstory').val()});
+    	}
+    	function voteUp(id){
+    		Dajaxice.deeds.voteUp(Dajax.process, {'data':id});
+    	}
+    	function voteDown(id){
+    		Dajaxice.deeds.voteDown(Dajax.process, {'data':id});
+    	}
+    	function createFaction(){
+    		Dajaxice.deeds.createFaction(Dajax.process, {
+    			'name':$('#faction-name').val(), 
+    			'motto':$('#faction-motto').val(), 
+    			'description':$('#faction-description').val() 
+    		});
+    	}
+    </script>
+</head>
+	<body style="margin: 0px; background-color: #FFEFD5; overflow-y: hidden;">
+		<div class="container-fluid">
+			<div class="nav-left-bg"></div>
+			<div class="nav-left-header">
+				<img src="http://minotar.net/helm/{{player.mc_username}}/80" class="nav-user-icon"></img>
+				<div style="padding: 12px 0px;">
+					<ul class="nav nav-stacked">
+						<li class="nav-user-text">{{player.mc_username}}</li>
+						<li class="nav-user-text">{{player.faction.name}}</li>
+						<li class="score">{{player.score}}</li>
+					</ul>
+				</div>
+			</div>
+			<div class="nav-left-wrapper">
+				<div class="nav-left">
+					{% block navbar %}
+					{% endblock %}
+				</div>
+			</div>
+			<div class="body-right">
+				<div id="empty"></div>
+				<div id="main-content">
+				{% block body %}
+				{% endblock %}
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

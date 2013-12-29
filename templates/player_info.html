@@ -1,0 +1,116 @@
+{% extends "profile.html" %}
+
+{% block navbar %}
+<ul class="nav nav-pills nav-stacked navbar-inverse">
+	<li class="btn btn-success nav-button">
+		<a href="/stories/" style="color: inherit; background-color: inherit; padding: initial;">
+		<span class="glyphicon glyphicon-book white"></span>
+		Stories
+		</a>
+	</li>
+	<li class="btn btn-warning nav-button active">
+		<a href="/players/" style="color: inherit; background-color: inherit; padding: initial;">
+		<span class="glyphicon glyphicon-user white"></span>
+		Players
+		</a>
+	</li>
+	<li class="btn btn-danger nav-button">
+		<a href="/factions/" style="color: inherit; background-color: inherit; padding: initial;">
+		<span class="glyphicon glyphicon-flag white"></span>
+		Factions
+		</a>
+	</li>
+	<li class="btn btn-primary nav-button">
+		<a href="/chat/" style="color: inherit; background-color: inherit; padding: initial;">
+		<span class="glyphicon glyphicon-comment white"></span>
+		Chat
+		</a>
+	</li>
+</ul>
+{% endblock %}
+
+{% block body %}
+	{% if other_player.faction != player.faction and player.faction != None %}
+		{% if player.rank > 0 %}
+			{% if invited %}
+			<button class="btn btn-danger active" style="float: right;">Invite Pending</button>
+			{% else %}
+			<a href="/invite/{{other_player.mc_username}}/"><button class="btn btn-danger" style="float: right;">Invite to Faction</button></a>
+			{% endif %}
+		{% endif %}
+	{% else %}
+		{% if player.rank == 1 %}
+			{% if other_player.rank == 0 %}
+				<a href="/promote/{{other_player.mc_username}}/"><button class="btn btn-success" style="float: right;">Promote</button></a>
+				<a href="/kick/{{other_player.mc_username}}/"><button class="btn btn-danger" style="float: right;">Kick</button></a>
+			{% endif %}
+		{% elif player.rank == 2 %}
+			{% if other_player.rank == 0 %}
+				<a href="/promote/{{other_player.mc_username}}/"><button class="btn btn-success" style="float: right;">Promote</button></a>
+				<a href="/kick/{{other_player.mc_username}}/"><button class="btn btn-danger" style="float: right;">Kick</button></a>
+			{% elif other_player.rank == 1 %}
+				<a href="/demote/{{other_player.mc_username}}/"><button class="btn btn-warning" style="float: right;">Demote</button></a>
+				<a href="/kick/{{other_player.mc_username}}/"><button class="btn btn-danger" style="float: right;">Kick</button></a>
+			{% endif %}
+		{% endif %}						
+	{% endif %}
+	<div style="margin: 10px; margin-right: 168px;">
+		<img src="http://minotar.net/helm/{{other_player.mc_username}}/128" style="float: left"></img>
+		<div style="position: relative; left: 10px">
+			<ul class="nav nav-stacked" style="text-align: left;">
+				<li class="nav-user-text"><h1 style="margin: 0px;">{{other_player.mc_username}}</h1></li>
+				<li class="nav-user-text"><h3 style="margin: 5px 0px;">{{other_player.faction.name}}</h3></li>
+				<li class="score" style="font-size: 24px;">{{other_player.score}}</li>
+			</ul>
+		</div>
+	</div>
+	<h1 style="text-align: center">
+		<img src="{{STATIC_URL}}imgs/halfSwirlLeft.png" />
+		<span>{{other_player.mc_username}}'s Stories</span>
+		<img src="{{STATIC_URL}}imgs/halfSwirlRight.png" />
+	</h1>
+	{% for story in stories %}
+		<div id="story{{story.id}}" style="margin-bottom: 50px;">
+			<div style="padding-bottom: 16px;">
+					<div class="alert alert-info" style="position: relative;">
+						{% autoescape off %}
+						{{story.text}}
+						{% endautoescape %}
+						<div class="bubble"></div>
+					</div>
+				<div style="float: right; padding: 10px;">
+					{% if request.user in story.userUpvotes.all %}
+					<span class="glyphicon glyphicon-thumbs-down black" onClick="voteDown({{story.id}});"></span>
+					<span class="score" style="padding: 0px 10px">{{story.score}}</span>
+					<span class="glyphicon glyphicon-thumbs-up green" onClick="voteUp({{story.id}});"></span>
+					{% elif request.user in story.userDownvotes.all %}
+					<span class="glyphicon glyphicon-thumbs-down red" onClick="voteDown({{story.id}});"></span>
+					<span class="score" style="padding: 0px 10px">{{story.score}}</span>
+					<span class="glyphicon glyphicon-thumbs-up black" onClick="voteUp({{story.id}});"></span>
+					{% else %}
+					<span class="glyphicon glyphicon-thumbs-down black" onClick="voteDown({{story.id}});"></span>
+					<span class="score" style="padding: 0px 10px">{{story.score}}</span>
+					<span class="glyphicon glyphicon-thumbs-up black" onClick="voteUp({{story.id}});"></span>					
+					{% endif %}
+				</div>
+				<a href="/player/{{story.author.mc_username}}/" style="color: inherit">
+					<img src="http://minotar.net/helm/{{story.author.mc_username}}/50" style="float: left; padding-right: 5px;"></img>
+					<div style="padding: 5px 0px; float: left;">
+						<span>
+							{{story.author.mc_username}}
+						</span><br>
+						<span>
+							{{story.datetime}}
+						</span>
+					</div>
+				</a>
+			</div>
+		</div>
+	{% endfor %}
+	{% if hasMore %}
+	<a href="/stories/{{filter}}/{{limit}}"><button class="btn btn-success" style="float: right;" onclick="loadMore({{limit}}, {{query}});">Load More Stories</button></a>
+	{% endif %}
+	<br>
+	<br>
+	<br>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "profile.html" %}
+
+{% block navbar %}
+<ul class="nav nav-pills nav-stacked navbar-inverse">
+	<li class="btn btn-success nav-button">
+		<a href="/stories/" style="color: inherit; background-color: inherit; padding: initial;">
+		<span class="glyphicon glyphicon-book white"></span>
+		Stories
+		</a>
+	</li>
+	<li class="btn btn-warning nav-button">
+		<a href="/players/" style="color: inherit; background-color: inherit; padding: initial;">
+		<span class="glyphicon glyphicon-user white"></span>
+		Players
+		</a>
+	</li>
+	<li class="btn btn-danger nav-button active">
+		<a href="/factions/" style="color: inherit; background-color: inherit; padding: initial;">
+		<span class="glyphicon glyphicon-flag white"></span>
+		Factions
+		</a>
+	</li>
+	<li class="btn btn-primary nav-button">
+		<a href="/chat/" style="color: inherit; background-color: inherit; padding: initial;">
+		<span class="glyphicon glyphicon-comment white"></span>
+		Chat
+		</a>
+	</li>
+</ul>
+{% endblock %}
+
+{% block body %}
+	<h1 style="text-align: center">
+		<img src="{{STATIC_URL}}imgs/halfSwirlLeft.png" />
+		<span>Factions</span>
+		<img src="{{STATIC_URL}}imgs/halfSwirlRight.png" />
+	</h1>
+	{% for faction in factions %}
+	<a href="/faction/{{faction.name}}/" style="color: inherit; text-decoration: inherit">
+		<div class="faction-wrapper">
+			<div>
+				<!-- <img src="http://minotar.net/helm/{{player.mc_username}}/80" style="float: left"></img> -->
+				<div style="position: relative; left: 10px">
+					<ul class="nav nav-stacked" style="text-align: left;">
+						<li class="nav-user-text"><h3>{{faction.name}}</h3></li>
+						<li class="nav-user-text"><h4 style="margin-top: 0px;"><em>{{faction.motto}}</em></h4></li>
+						<li class="nav-user-text"><p>{{faction.description}}</p></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</a>
+	{% endfor %}
+	<a href="/createfaction/"><button class="btn btn-danger" style="float: right;">Create A Faction</button></a>
+	<br>
+	<br>
+	<br>
+{% endblock %}

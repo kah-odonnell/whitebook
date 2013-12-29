@@ -1,0 +1,89 @@
+{% extends "profile.html" %}
+
+{% block navbar %}
+<ul class="nav nav-pills nav-stacked navbar-inverse">
+	<li class="btn btn-success nav-button active">
+		<a href="/stories/" style="color: inherit; background-color: inherit; padding: initial;">
+		<span class="glyphicon glyphicon-book white"></span>
+		Stories
+		</a>
+	</li>
+	<li class="btn btn-warning nav-button">
+		<a href="/players/" style="color: inherit; background-color: inherit; padding: initial;">
+		<span class="glyphicon glyphicon-user white"></span>
+		Players
+		</a>
+	</li>
+	<li class="btn btn-danger nav-button">
+		<a href="/factions/" style="color: inherit; background-color: inherit; padding: initial;">
+		<span class="glyphicon glyphicon-flag white"></span>
+		Factions
+		</a>
+	</li>
+	<li class="btn btn-primary nav-button">
+		<a href="/chat/" style="color: inherit; background-color: inherit; padding: initial;">
+		<span class="glyphicon glyphicon-comment white"></span>
+		Chat
+		</a>
+	</li>
+</ul>
+{% endblock %}
+
+{% block body %}
+	<h1 style="text-align: center">
+		<img src="{{STATIC_URL}}imgs/halfSwirlLeft.png" />
+		<span>Stories</span>
+		<img src="{{STATIC_URL}}imgs/halfSwirlRight.png" />
+	</h1>
+	<div id="addstory">
+		<h4>Write Your Own</h4>
+		<textarea class="form-control" id="newstory" rows="3"></textarea>
+		<button class="btn btn-primary" style="float:right" onClick="submitStory();">Submit</button>
+		<br><br><br>
+		<div id="warnings"></div>
+	</div>
+	{% for story in stories %}
+		<div id="story{{story.id}}" style="margin-bottom: 50px">
+			<div style="padding-bottom: 16px;">
+					<div class="alert alert-info" style="position: relative;">
+						{% autoescape off %}
+						{{story.text}}
+						{% endautoescape %}
+						<div class="bubble"></div>
+					</div>
+				<div style="float: right; padding: 10px;">
+					{% if request.user in story.userUpvotes.all %}
+					<span class="glyphicon glyphicon-thumbs-down black" onClick="voteDown({{story.id}});"></span>
+					<span class="score" style="padding: 0px 10px">{{story.score}}</span>
+					<span class="glyphicon glyphicon-thumbs-up green" onClick="voteUp({{story.id}});"></span>
+					{% elif request.user in story.userDownvotes.all %}
+					<span class="glyphicon glyphicon-thumbs-down red" onClick="voteDown({{story.id}});"></span>
+					<span class="score" style="padding: 0px 10px">{{story.score}}</span>
+					<span class="glyphicon glyphicon-thumbs-up black" onClick="voteUp({{story.id}});"></span>
+					{% else %}
+					<span class="glyphicon glyphicon-thumbs-down black" onClick="voteDown({{story.id}});"></span>
+					<span class="score" style="padding: 0px 10px">{{story.score}}</span>
+					<span class="glyphicon glyphicon-thumbs-up black" onClick="voteUp({{story.id}});"></span>					
+					{% endif %}
+				</div>
+				<a href="/player/{{story.author.mc_username}}/" style="color: inherit">
+				<img src="http://minotar.net/helm/{{story.author.mc_username}}/50" style="float: left; padding-right: 5px"></img>
+					<div style="padding: 5px 0px; float: left;">
+						<span>
+							{{story.author.mc_username}}
+						</span><br>
+						<span>
+							{{story.datetime}}
+						</span>
+					</div>
+				</a>
+			</div>
+		</div>
+	{% endfor %}
+	{% if hasMore %}
+	<a href="/stories/{{filter}}/{{limit}}"><button class="btn btn-success" style="float: right;" onclick="loadMore({{limit}}, {{query}});">Load More Stories</button></a>
+	{% endif %}
+	<br>
+	<br>
+	<br>
+{% endblock %}

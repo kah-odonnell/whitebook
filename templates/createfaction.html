@@ -1,0 +1,63 @@
+{% extends "profile.html" %}
+
+{% block navbar %}
+<ul class="nav nav-pills nav-stacked navbar-inverse">
+	<li class="btn btn-success nav-button">
+		<a href="/stories/" style="color: inherit; background-color: inherit; padding: initial;">
+		<span class="glyphicon glyphicon-book white"></span>
+		Stories
+		</a>
+	</li>
+	<li class="btn btn-warning nav-button">
+		<a href="/players/" style="color: inherit; background-color: inherit; padding: initial;">
+		<span class="glyphicon glyphicon-user white"></span>
+		Players
+		</a>
+	</li>
+	<li class="btn btn-danger nav-button active">
+		<a href="/factions/" style="color: inherit; background-color: inherit; padding: initial;">
+		<span class="glyphicon glyphicon-flag white"></span>
+		Factions
+		</a>
+	</li>
+	<li class="btn btn-primary nav-button">
+		<a href="/chat/" style="color: inherit; background-color: inherit; padding: initial;">
+		<span class="glyphicon glyphicon-comment white"></span>
+		Chat
+		</a>
+	</li>
+</ul>
+{% endblock %}
+
+{% block body %}
+	<h1 style="text-align: center">
+		<img src="{{STATIC_URL}}imgs/halfSwirlLeft.png" />
+		<span>Create A Faction</span>
+		<img src="{{STATIC_URL}}imgs/halfSwirlRight.png" />
+	</h1>
+	<div>
+		<h4>Name</h4>
+		<input class="form-control" id="faction-name"></input>
+		<div id="name-warnings"></div>
+	</div>
+	<div>
+		<h4>Motto</h4>
+		<input class="form-control" id="faction-motto"></input>
+		<div id="name-warnings"></div>
+	</div>
+	<div>
+		<h4>Description</h4>
+		<textarea class="form-control" id="faction-description" rows="3"></textarea>
+		<div id="description-warnings"></div>
+	</div>
+	{% if in_faction %}
+	<br>
+	<div class="alert alert-danger"><strong style="font-weight: bold !important;">You are already in a faction!</strong><br>You will leave your current faction if you create a new one.</div>
+	{% endif %}
+	<br>
+
+	<button class="btn btn-danger" style="float: right;" onclick="createFaction();">Finish</button>
+	<br>
+	<br>
+	<br>
+{% endblock %}

@@ -4246,7 +4246,6 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .nav-stacked > li + li {
-  margin-top: 2px;
   margin-left: 0;
 }
 
@@ -5439,6 +5438,8 @@ a.thumbnail.active {
 .progress.active .progress-bar {
   -webkit-animation: progress-bar-stripes 2s linear infinite;
           animation: progress-bar-stripes 2s linear infinite;
+  -webkit-animation-direction: reverse;
+          animation-direction: reverse;
 }
 
 .progress-bar-success {

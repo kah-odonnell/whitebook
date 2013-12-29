@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<link href="{{STATIC_URL}}css/bootstrap.css" rel="stylesheet">
+<head>
+    <title>The White Book</title>
+    <style>
+    	@font-face {
+    		font-family: minecraft;
+    		src: url({{STATIC_URL}}fonts/minecraft.ttf) format('truetype');
+    	}
+		* {
+			font-weight: normal !important;
+			font-family: minecraft !important;
+			-webkit-border-radius: 0 !important;
+			-moz-border-radius: 0 !important;
+			  border-radius: 0 !important;
+		}
+    </style>
+</head>
+	<body style="margin: 0px">
+		<h1 style="text-align: center">Login to Minecraft</h1>
+		<div class="container">
+			<img src="{{STATIC_URL}}imgs/enchantmentTable.png" style="float: left; position: relative; left: 30px; z-index: 1"></img>
+			<img src="{{STATIC_URL}}imgs/grassBlock.png" style="float: right; position: relative; right: 30px; z-index: 1"></img>
+			<div class="progress progress-success progress-striped active" style="position: relative; top: 60px">
+				<div class="progress-bar progress-bar-success" style="width: 100%;"></div>
+			</div>
+		</div>
+
+		<div class="container" style="width: 500px">
+			<div>
+				{% if error %}
+				<div class="alert alert-danger">{{errormsg}}</div>
+				{% else %}
+				<div class="alert alert-warning">In order to use The White Book, we must validate your minecraft account. We will never ask for this information again, and it is never saved.</div>
+				{% endif %}
+				<form action="/linkaccounts/" method="post">
+					{% csrf_token %}
+					<div class="form-group">
+						<label for="MCUsername">Minecraft Username</label>
+						<input type="text" class="form-control input-lg" id="MCUsername" name="MCUsername">
+					</div>
+					<div class="form-group">
+						<label for="MCPassword">Minecraft Password</label>
+						<input type="password" class="form-control input-lg" id="MCPassword" name="MCPassword">
+					</div>
+					<button type="submit" class="btn btn-default btn-lg btn-block">Link Accounts</button>
+				</form><br>
+			</div>
+		</div>
+	</body>
+</html>
