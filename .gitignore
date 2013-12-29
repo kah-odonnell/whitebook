@@ -1,5 +1,10 @@
 *.log
 *.pot
 *.pyc
+*.css
+*.png
+*.js
+*.sqlite3
+secrets.py
 local_settings.py
 
