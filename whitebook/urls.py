@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from players import views as player_views
 from deeds import views as deed_views
 from factions import views as faction_views
+from chat import views as chat_views
 from dajaxice.core import dajaxice_autodiscover, dajaxice_config
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 dajaxice_autodiscover()
@@ -37,6 +38,7 @@ urlpatterns = patterns('',
     url(r'^promote/(?P<username>.*)/', faction_views.promote), 
     url(r'^demote/(?P<username>.*)/', faction_views.demote), 
     url(r'^kick/(?P<username>.*)/', faction_views.kick), 
+    url(r'^chat/', chat_views.main), 
 )
 
 urlpatterns += staticfiles_urlpatterns()

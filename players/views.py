@@ -100,8 +100,9 @@ def linkaccounts(request):
                     'error': True,
                     'errormsg': 'Your minecraft account has already been registered on The White Book. Please use another.'
                 })
-            else:                
-                player = Player(user=request.user, mc_username=verified, score=0, rank=0)
+            else: 
+                now = datetime.datetime.utcnow().replace(tzinfo=utc)               
+                player = Player(user=request.user, mc_username=verified, score=0, rank=0, most_recent=(now - datetime.timedelta(seconds=60)))
                 player.save()
                 return HttpResponseRedirect('/')
     if request.method == 'GET':

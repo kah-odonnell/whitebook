@@ -8,7 +8,7 @@ class Player(models.Model):
     rank = models.PositiveIntegerField()
     mc_username = models.CharField(max_length=100)
     score = models.PositiveIntegerField()
-    most_recent = models.DateTimeField(auto_now_add=True)
+    most_recent = models.DateTimeField()
 
 class Invitation(models.Model):
     faction = models.ForeignKey(Faction)

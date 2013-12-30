@@ -20,7 +20,7 @@
 	</li>
 	<li>
 		<a href="/factions/" class="" style="color: inherit; background-color: inherit; padding: initial;">
-			<button class="btn btn-danger nav-button active">
+			<button class="btn btn-danger nav-button">
 				<span class="glyphicon glyphicon-flag white"></span>
 				Factions
 			</button>
@@ -28,7 +28,7 @@
 	</li>
 	<li>
 		<a href="/chat/" class="" style="color: inherit; background-color: inherit; padding: initial;">
-			<button class="btn btn-primary nav-button">
+			<button class="btn btn-primary nav-button active">
 				<span class="glyphicon glyphicon-comment white"></span>
 				Chat
 			</button>
@@ -38,34 +38,13 @@
 {% endblock %}
 
 {% block body %}
-	{% if invited %}
-	<a href="/join/{{faction.name}}/"><button class="btn btn-danger" style="float: right;">Accept Invite</button></a>
-	{% endif %}
-	<h1>{{faction.name}}</h1>
-	<h3 style="margin-top: 0px;"><em>{{faction.motto}}</em></h3>
-	<p>{{faction.description}}</p>
 	<h1 style="text-align: center">
 		<img src="{{STATIC_URL}}imgs/halfSwirlLeft.png" />
-		<span>Members</span>
+		<span>Chat</span>
 		<img src="{{STATIC_URL}}imgs/halfSwirlRight.png" />
 	</h1>
 	<center>
-		{% for player in players %}
-		<a href="/player/{{player.mc_username}}/" style="color: inherit; text-decoration: inherit">
-				<div class="player-wrapper" {% if player.rank > 0 %}style="box-shadow: 7px 7px 0px #FFCC00;"{% endif %}>
-					<div style="margin: 10px">
-						<img src="http://minotar.net/helm/{{player.mc_username}}/80" style="float: left"></img>
-						<div style="position: relative; left: 10px">
-							<ul class="nav nav-stacked" style="text-align: left;">
-								<li class="nav-user-text">{{player.mc_username}}</li>
-								<li class="nav-user-text">{{faction.name|default:"&nbsp;"}}</li>
-								<li class="score">{{player.score}}</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-		</a>
-		{% endfor %}
+		<h3>Coming Eventually</h3>
 	</center>
 	<br>
 	<br>
