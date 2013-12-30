@@ -92,7 +92,7 @@ def linkaccounts(request):
         if verified is False:
             return render(request, 'linkaccounts.html', {
                 'error': True,
-                'errormsg': 'minecraft.net does not recognize your login credentials. Please try again'
+                'errormsg': 'minerap.com does not recognize your login credentials. Please try again'
             })
         else:
             if utils.minecraftAccountAlreadyExists(verified):

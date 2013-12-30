@@ -2,16 +2,19 @@ import urllib2
 import urllib
 
 def connect_minecraft(username, password):
-    url = "http://login.minecraft.net/"
+    url = "https://www.minerap.com/user/login/"
     data = {
-        "user": username,
+        "username": username,
         "password": password,
-        "version": 25
     }
     params = urllib.urlencode(data)
-    req = urllib.urlopen(url, params)
-    x = (req.read()).split(":")
-    if x[0] == 'Bad login':
+    req = urllib2.Request(url, params)
+    try:
+        response = urllib2.urlopen(req)
+        code = response.code
+    except Exception, e:
+        code = e.code
+    if code == 200:
         return False
     else:
-        return x[2]
+        return username
