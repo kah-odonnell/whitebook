@@ -39,6 +39,7 @@ urlpatterns = patterns('',
     url(r'^demote/(?P<username>.*)/', faction_views.demote), 
     url(r'^kick/(?P<username>.*)/', faction_views.kick), 
     url(r'^chat/', chat_views.main), 
+    url(r'^edit/', faction_views.edit),
 )
 
 urlpatterns += staticfiles_urlpatterns()

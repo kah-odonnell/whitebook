@@ -108,3 +108,12 @@ def demote(request, username=""):
         other_player.rank = 0
         other_player.save()
         return HttpResponseRedirect(url)
+
+def edit(request):
+    if not request.user.is_authenticated():
+        return render(request, 'login.html')
+    player = Player.objects.get(user=request.user)
+    if player.rank > 0:
+        return render(request, 'edit.html', {"player": player, "faction": player.faction})
+    url = "/faction/" + player.faction.name + "/"
+    return HttpResponseRedirect(url)

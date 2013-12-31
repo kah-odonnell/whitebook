@@ -13,6 +13,22 @@ import cgi
 from players import utils
 
 @dajaxice_register
+def editFaction(request, motto, description):
+    dajax = Dajax()
+
+    player = utils.getPlayer(request.user)
+    if player.rank > 0:
+        faction = player.faction
+        faction.motto = motto
+        faction.description = description
+        faction.save()
+
+    url = '/faction/' + faction.name + '/'
+    dajax.redirect(url, delay=0)
+    return dajax.json()
+
+
+@dajaxice_register
 def submitStory(request, data):
     dajax = Dajax()
     data = data.replace('\n','<br />')

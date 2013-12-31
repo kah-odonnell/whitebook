@@ -38,38 +38,23 @@
 {% endblock %}
 
 {% block body %}
-	{% if player.faction == faction and player.rank > 0 %}
-				<a href="/edit/"><button class="btn btn-warning" style="float: right;">Edit</button></a>
-	{% endif %}
-	{% if invited %}
-	<a href="/join/{{faction.name}}/"><button class="btn btn-danger" style="float: right;">Accept Invite</button></a>
-	{% endif %}
-	<h1>{{faction.name}}</h1>
-	<h3 style="margin-top: 0px;"><em>{{faction.motto}}</em></h3>
-	<p>{{faction.description}}</p>
 	<h1 style="text-align: center">
 		<img src="{{STATIC_URL}}imgs/halfSwirlLeft.png" />
-		<span>Members</span>
+		<span>Edit Info</span>
 		<img src="{{STATIC_URL}}imgs/halfSwirlRight.png" />
 	</h1>
-	<center>
-		{% for player in players %}
-		<a href="/player/{{player.mc_username}}/" style="color: inherit; text-decoration: inherit">
-				<div class="player-wrapper" {% if player.rank > 0 %}style="box-shadow: 7px 7px 0px #FFCC00;"{% endif %}>
-					<div style="margin: 10px">
-						<img src="http://minotar.net/helm/{{player.mc_username}}/80" style="float: left"></img>
-						<div style="position: relative; left: 10px">
-							<ul class="nav nav-stacked" style="text-align: left;">
-								<li class="nav-user-text">{{player.mc_username}}</li>
-								<li class="nav-user-text">{{faction.name|default:"&nbsp;"}}</li>
-								<li class="score">{{player.score}}</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-		</a>
-		{% endfor %}
-	</center>
+	<h2>{{faction.name}}</h2>
+	<div>
+		<h4>Motto</h4>
+		<input class="form-control" id="faction-motto" value="{{faction.motto}}"></input>
+		<div id="name-warnings"></div>
+	</div>
+	<div>
+		<h4>Description</h4>
+		<textarea class="form-control" id="faction-description" rows="3">{{faction.description}}</textarea>
+		<div id="description-warnings"></div>
+	</div>
+	<button class="btn btn-danger" style="float: right;" onclick="editFaction();">Finish</button>
 	<br>
 	<br>
 	<br>

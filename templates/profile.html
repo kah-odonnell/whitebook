@@ -38,6 +38,12 @@
     			'description':$('#faction-description').val() 
     		});
     	}
+    	function editFaction(){
+    		Dajaxice.deeds.editFaction(Dajax.process, {
+    			'motto':$('#faction-motto').val(), 
+    			'description':$('#faction-description').val() 
+    		});
+    	}
     </script>
 </head>
 	<body style="margin: 0px; background-color: #FFEFD5; overflow-y: hidden;">
